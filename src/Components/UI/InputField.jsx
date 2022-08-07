@@ -5,7 +5,12 @@ function InputField(props) {
   return (
     <Form.Group className="mb-3" controlId="formBasicEmail">
       <Form.Label>{props.label}</Form.Label>
-      <Form.Control type={props.type} placeholder={props.placeholder} />
+      <Form.Control
+        type={props.type}
+        placeholder={props.placeholder}
+        value={props.value}
+        onClick={props.onClick}
+      />
     </Form.Group>
   );
 }

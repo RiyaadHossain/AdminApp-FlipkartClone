@@ -1,0 +1,10 @@
+import { authContants } from "./constants";
+
+export const login = (user) => {
+  return async (dispatch) => {
+    dispatch({
+      type: authContants.LOGIN_REQUEST,
+      payload: {user},
+    });
+  };
+};
