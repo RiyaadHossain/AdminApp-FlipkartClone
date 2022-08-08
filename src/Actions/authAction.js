@@ -13,7 +13,7 @@ export const login = (user) => {
     });
 
     if (res.status === 200) {
-      const { token, user} = res.data
+      const { token, user } = res.data
       localStorage.setItem("token", token)
       localStorage.setItem("user", JSON.stringify(user))
       dispatch({
@@ -29,3 +29,21 @@ export const login = (user) => {
 
   };
 };
+
+export const isLoggedIn = () => {
+  return async dispatch => {
+    const token = localStorage.getItem("token")
+    const user = JSON.parse(localStorage.getItem("user"))
+    if (token) {
+      dispatch({
+        type: authContants.LOGIN_SUCCESS,
+        payload: { user, token },
+      });
+    } else {
+      dispatch({
+        type: authContants.LOGIN_FAIL,
+        payload: { error: "User need to Login" },
+      });
+    }
+  }
+}

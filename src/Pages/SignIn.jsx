@@ -1,19 +1,32 @@
-import React, { useState } from "react";
-import { Form, Button, Col, Card, Container } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { login } from "../Actions";
+import { Navigate } from "react-router-dom";
+import { isLoggedIn, login } from "../Actions";
+import React, { useEffect, useState } from "react";
 import InputField from "../Components/UI/InputField";
+import { useDispatch, useSelector } from "react-redux";
+import { Form, Button, Col, Card, Container } from "react-bootstrap";
 
 function SignIn() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [error, setError] = useState("");
+  const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!auth.authticated) {
+      dispatch(isLoggedIn());
+    }
+    if (auth.authticated) {
+      <Navigate to="/" />;
+    }
+  }, [auth.authticated, dispatch]);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const user = { email, password };
     dispatch(login(user));
   };
+  console.log(auth.authticated);
 
   return (
     <Container>
