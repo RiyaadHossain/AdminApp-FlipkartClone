@@ -1,8 +1,9 @@
 import { authContants } from "../Actions/constants";
 
-const initialState = { name: "Riyad" };
+const initialState = { token: null, user: {} };
 
 const authReducer = (state = initialState, action) => {
+  console.log(action)
   switch (action.type) {
     case authContants.LOGIN_REQUEST:
       state = {

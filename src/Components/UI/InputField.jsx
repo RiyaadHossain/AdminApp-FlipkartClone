@@ -9,7 +9,7 @@ function InputField(props) {
         type={props.type}
         placeholder={props.placeholder}
         value={props.value}
-        onClick={props.onClick}
+        onChange={props.onChange}
       />
     </Form.Group>
   );

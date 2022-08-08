@@ -1,0 +1,1 @@
+export const apiConfiq = "http://localhost:5000/"
