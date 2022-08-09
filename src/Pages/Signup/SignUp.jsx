@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import InputField from "../Components/UI/InputField";
+import InputField from "../../Components/UI/InputField";
 
 function SignUp() {
   return (
@@ -14,7 +14,7 @@ function SignUp() {
                 label="First Name"
                 type="text"
                 placeholder="First Name"
-                onClick={() => {}}
+                onChange={() => {}}
                 value=""
               />
             </Col>
@@ -23,23 +23,30 @@ function SignUp() {
                 label="Last Name"
                 type="text"
                 placeholder="Last Name"
-                onClick={() => {}}
+                onChange={() => {}}
                 value=""
               />
             </Col>
           </Row>
           <InputField
+            label="User Name"
+            type="username"
+            placeholder="Enter User Name"
+            onChange={() => {}}
+            value=""
+          />
+          <InputField
             label="Email Address"
             type="email"
             placeholder="Enter Email"
-            onClick={() => {}}
+            onChange={() => {}}
             value=""
           />
           <InputField
             label="Password"
             type="password"
             placeholder="Password"
-            onClick={() => {}}
+            onChange={() => {}}
             value=""
           />
 

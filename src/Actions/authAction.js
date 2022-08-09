@@ -30,6 +30,14 @@ export const login = (user) => {
   };
 };
 
+export const logout = () => {
+  return async dispatch => {
+    dispatch({
+      type: authContants.LOGOUT_REQUEST
+    })
+  }
+}
+
 export const isLoggedIn = () => {
   return async dispatch => {
     const token = localStorage.getItem("token")

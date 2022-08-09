@@ -1,7 +1,7 @@
+import { login } from "../../Actions";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { isLoggedIn, login } from "../Actions";
-import React, { useEffect, useState } from "react";
-import InputField from "../Components/UI/InputField";
+import InputField from "../../Components/UI/InputField";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Col, Card, Container } from "react-bootstrap";
 
@@ -12,22 +12,15 @@ function SignIn() {
   // const [error, setError] = useState("");
   const auth = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (!auth.authticated) {
-      dispatch(isLoggedIn());
-    }
-    if (auth.authticated) {
-      <Navigate to="/" />;
-    }
-  }, [auth.authticated, dispatch]);
-
   const handleLogin = (e) => {
     e.preventDefault();
     const user = { email, password };
     dispatch(login(user));
   };
-  console.log(auth.authticated);
-
+  if (auth.authticated) {
+    console.log(auth.authticated);
+    <Navigate to={"/"} />;
+  }
   return (
     <Container>
       <Col md={{ span: 6, offset: 3 }}>
