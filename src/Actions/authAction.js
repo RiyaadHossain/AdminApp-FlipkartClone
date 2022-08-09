@@ -3,14 +3,14 @@ import { authContants } from "./constants";
 
 export const login = (user) => {
   return async (dispatch) => {
-    const res = await axiosAPI.post("/user/signin", {
-      ...user
-    })
 
     dispatch({
       type: authContants.LOGIN_REQUEST,
-      payload: { ...user },
     });
+
+    const res = await axiosAPI.post("/admin/signin", {
+      ...user
+    })
 
     if (res.status === 200) {
       const { token, user } = res.data

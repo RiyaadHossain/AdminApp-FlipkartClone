@@ -29,7 +29,7 @@ const authReducer = (state = initialState, action) => {
       }
       break
     default:
-      state = "Hello";
+      state = initialState;
   }
   return state;
 };

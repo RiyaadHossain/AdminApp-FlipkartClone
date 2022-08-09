@@ -8,4 +8,8 @@ export const authContants = {
 
 };
 
-export const userContants = {}
+export const userContants = {
+  SIGNUP_REQUEST: "SIGNUP_REQUEST",
+  SIGNUP_SUCCESS: "SIGNUP_SUCCESS",
+  SIGNUP_FAIL: "SIGNUP_FAIL",
+}
