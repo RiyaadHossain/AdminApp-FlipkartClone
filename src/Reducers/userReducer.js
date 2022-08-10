@@ -14,23 +14,24 @@ const userReducer = (state = initialState, action) => {
             break;
         case userContants.SIGNUP_SUCCESS:
             const { message } = action.payload
+            console.log(message)
             state = {
                 ...state,
-                message,
-                loading: false
+                loading: false,
+                message: action.payload.message,
             };
             break;
         case userContants.SIGNUP_FAIL:
             const { error } = action.payload
             state = {
                 ...state,
-                error,
+                error: error,
                 loading: false
             }
-            break
-        default:
-            state = initialState;
-    }
+            break;
+            default:
+                state = initialState;
+        }
     return state;
 };
 export default userReducer;

@@ -5,6 +5,9 @@ import SignUp from "./Pages/Signup/SignUp";
 import SignIn from "./Pages/Signin/SignIn";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Category from "./Pages/Category/Category";
+import Order from "./Pages/Order/Order";
+import Product from "./Pages/Product/Product";
 
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/orders" element={<Order />} />
+        <Route path="/products" element={<Product />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
       </Routes>

@@ -8,10 +8,8 @@ export const signup = (user) => {
             type: userContants.SIGNUP_REQUEST,
         });
 
-        const res = await axiosAPI.post("/admin/signup", {
-            ...user
-        })
-        console.log(res.data.message)
+        const res = await axiosAPI.post("/admin/signup", { ...user })
+        console.log(res.status);
         if (res.status === 201) {
             const { message } = res.data
             dispatch({

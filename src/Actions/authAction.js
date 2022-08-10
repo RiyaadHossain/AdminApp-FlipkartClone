@@ -8,9 +8,7 @@ export const login = (user) => {
       type: authContants.LOGIN_REQUEST,
     });
 
-    const res = await axiosAPI.post("/admin/signin", {
-      ...user
-    })
+    const res = await axiosAPI.post("/admin/signin", { ...user })
 
     if (res.status === 200) {
       const { token, user } = res.data

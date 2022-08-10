@@ -27,7 +27,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         authticated: false
       }
-      break
+      break;
     default:
       state = initialState;
   }
