@@ -3,7 +3,6 @@ import { userContants } from "../Actions/constants";
 const initialState = { loading: false, error: null, message: "" };
 
 const userReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case userContants.SIGNUP_REQUEST:
             state = {
@@ -31,6 +30,7 @@ const userReducer = (state = initialState, action) => {
             break;
         default:
             state = initialState;
+            break;
     }
     return state;
 };

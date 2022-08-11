@@ -3,7 +3,6 @@ import { authContants } from "../Actions/constants";
 const initialState = { token: null, user: {}, authenticating: false, authticated: false, error: null, message: "", loading: false };
 
 const authReducer = (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case authContants.LOGIN_REQUEST:
       state = {
@@ -52,6 +51,7 @@ const authReducer = (state = initialState, action) => {
       break;
     default:
       state = initialState;
+      break
   }
   return state;
 };

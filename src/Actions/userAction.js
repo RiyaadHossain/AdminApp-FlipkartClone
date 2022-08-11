@@ -9,7 +9,6 @@ export const signup = (user) => {
         });
 
         const res = await axiosAPI.post("/admin/signup", { ...user })
-        console.log(res.status);
         if (res.status === 201) {
             const { message } = res.data
             dispatch({
