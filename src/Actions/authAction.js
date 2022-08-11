@@ -33,6 +33,20 @@ export const logout = () => {
     dispatch({
       type: authContants.LOGOUT_REQUEST
     })
+    const res = await axiosAPI.get("/admin/signout")
+
+    if (res.status === 200) {
+      localStorage.clear()
+      dispatch({
+        type: authContants.LOGOUT_SUCCESS,
+        payload: res.data.message
+      })
+    } else {
+      dispatch({
+        type: authContants.LOGOUT_FAIL,
+        error: "Error"
+      })
+    }
   }
 }
 

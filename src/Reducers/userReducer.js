@@ -29,9 +29,9 @@ const userReducer = (state = initialState, action) => {
                 loading: false
             }
             break;
-            default:
-                state = initialState;
-        }
+        default:
+            state = initialState;
+    }
     return state;
 };
 export default userReducer;

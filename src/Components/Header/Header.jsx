@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../Actions/authAction";
 
 function Header() {
   const authenticate = useSelector((state) => state.auth.authenticate);
-  const handleLogout = () => {};
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <Navbar
       collapseOnSelect
@@ -35,7 +39,7 @@ function Header() {
               </>
             ) : (
               <li className="nav-item">
-                <span onClick={handleLogout} className="nav-link">
+                  <span style={{ cursor: 'pointer', display: 'inline'}} onClick={handleLogout} className="nav-link">
                   Log out
                 </span>
               </li>
