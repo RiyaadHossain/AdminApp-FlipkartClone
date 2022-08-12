@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../Components/Layout/Layout";
-import { addCategory, getAllCategory } from "../../Actions/categoryAction";
+import InputField from "../../Components/UI/InputField";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { Col, Row, Button, Modal, Container } from "react-bootstrap";
-import InputField from "../../Components/UI/InputField";
+import { addCategory, getAllCategory } from "../../Actions/categoryAction";
 
 function Category() {
   const dispatch = useDispatch();
@@ -20,8 +20,10 @@ function Category() {
     form.append("parentId", subCateName);
     form.append("categoryImg", cateImg);
     dispatch(addCategory(form));
+    setShow(false)
   };
 
+  
   /* Print all the Category and Sub-category */
   const showCategory = (categories) => {
     let myCategory = [];
@@ -49,8 +51,8 @@ function Category() {
         type: category.type,
       });
 
-      if (category.parentId) {
-        printCateSelect(category.parentId);
+      if (category.children.length > 0) {
+        printCateSelect(category.children, options);
       }
     }
 
