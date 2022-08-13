@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Category from "./Pages/Category/Category";
 import Order from "./Pages/Order/Order";
 import Product from "./Pages/Product/Product";
+import { getAllData } from "./Actions/dataAction";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     if (!auth.authticated) {
       dispatch(isLoggedIn());
     }
+    dispatch(getAllData())
   }, [auth.authticated, dispatch]);
   
   return (

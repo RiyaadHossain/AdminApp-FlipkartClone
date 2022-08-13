@@ -1,6 +1,6 @@
 import { productContants } from "../Actions/constants";
 
-const initialState = { laoding: false, message: "", error: null };
+const initialState = { product: [], error: null };
 
 const productReducer = (state = initialState, action) => {
 
@@ -10,7 +10,7 @@ const productReducer = (state = initialState, action) => {
             state = { ...state, laoding: true }
             break;
         case productContants.ADDPRODUCT_SUCCESS:
-            state = { ...state, laoding: false, message: "Product Added Successfully" }
+            state = { ...state, product: action.payload.product }
             break;
         case productContants.ADDPRODUCT_FAIL:
             state = { ...initialState }

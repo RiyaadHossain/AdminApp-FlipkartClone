@@ -56,7 +56,9 @@ function Product() {
           </Col>
         </Row>
         <Row>
-          <Col md={12}></Col>
+          <Col md={12}>
+            
+          </Col>
         </Row>
 
         <MyModal

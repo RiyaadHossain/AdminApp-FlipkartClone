@@ -42,7 +42,7 @@ const buildNewCategories = (parentId, categories, category) => {
 }
 
 const categoryReducer = (state = initialState, action) => {
-    console.log(action)
+    
     switch (action.type) {
         case categoryContants.GETALLCATE_REQUEST:
             state = { ...state, loading: true }
