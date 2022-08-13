@@ -1,3 +1,9 @@
+export const dataContants = {
+  DATA_REQUEST: "DATA_REQUEST",
+  DATA_SUCCESS: "DATA_SUCCESS",
+  DATA_FAIL: "DATA_FAIL",
+}
+
 export const authContants = {
   LOGIN_REQUEST: "LOGIN_REQUEST",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",

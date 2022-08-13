@@ -17,6 +17,7 @@ function Header() {
       bg="dark"
       variant="dark"
       style={{ zIndex: 1 }}
+      sticky="top"
     >
       <Container>
         <Navbar.Brand href="#home">Admin Dashboard</Navbar.Brand>
