@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../Components/Layout/Layout";
 import InputField from "../../Components/UI/InputField";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { Col, Row, Button, Container } from "react-bootstrap";
+import { Col, Row, Button, Container, Table } from "react-bootstrap";
 import { addProduct } from "../../Actions/productAction";
 import MyModal from "../../Components/UI/MyModal";
 
@@ -17,6 +17,7 @@ function Product() {
 
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
+  const product = useSelector((state) => state.product.product);
 
   /* Function to Display Categories in a Linear Way */
   const showCategory = (categories, option = []) => {
@@ -55,9 +56,31 @@ function Product() {
             </div>
           </Col>
         </Row>
-        <Row>
-          <Col md={12}>
-            
+
+        <Row style={{ marginTop: "25px" }}>
+          <Col>
+            <Table striped responsive variant="dark">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {product.map((pro, i) => (
+                  <tr>
+                    <td>{i + 1}</td>
+                    <td>{pro.name}</td>
+                    <td>{pro.price}</td>
+                    <td>{pro.quantity}</td>
+                    <td>{pro.category}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           </Col>
         </Row>
 
@@ -110,7 +133,6 @@ function Product() {
             onChange={(e) => setPicture([...picture, e.target.files[0]])}
           />
         </MyModal>
-
       </Container>
     </Layout>
   );
