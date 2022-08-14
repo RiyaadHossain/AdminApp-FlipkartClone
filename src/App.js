@@ -15,13 +15,14 @@ function App() {
 
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth)
+
   useEffect(() => {
     if (!auth.authticated) {
       dispatch(isLoggedIn());
     }
     dispatch(getAllData())
   }, [auth.authticated, dispatch]);
-  
+
   return (
     <>
       <Routes>
