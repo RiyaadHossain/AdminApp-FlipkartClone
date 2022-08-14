@@ -10,7 +10,7 @@ export const getAllData = () => {
         if (res.status === 200) {
             // console.log(res);
             dispatch({ type: categoryContants.GETALLCATE_SUCCESS, payload: { message: res.data.category} })
-            dispatch({ type: productContants.ADDPRODUCT_SUCCESS, payload: { product: res.data.product } })
+            dispatch({ type: productContants.GETPRODUCT_SUCCESS, payload: { products: res.data.product } })
 
         } else {
 

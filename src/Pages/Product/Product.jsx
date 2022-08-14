@@ -140,7 +140,7 @@ function Product() {
                   <td>{pro.name}</td>
                   <td>{pro.price}</td>
                   <td>{pro.quantity}</td>
-                  <td>{pro.category}</td>
+                  <td>{pro.category.name}</td>
                 </tr>
               ))}
             </tbody>
