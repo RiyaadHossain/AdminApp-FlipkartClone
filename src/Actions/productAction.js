@@ -7,17 +7,16 @@ const getProducts = () => {
         dispatch({ type: productContants.GETPRODUCT_REQUEST });
         const res = await axiosAPI.get(`product/getProduct`);
         if (res.status === 200) {
-            const { products } = res.data;
-            console.log(res.data.products)
+            const { products } = res.data; 
           dispatch({
-            type: productContants.GETPRODUCT_SUCCESS,
+            type: productContants.GETPRODUCT_SUCCESS, 
             payload: { products },
           });
         } else {
-          dispatch({ type: productContants.GETPRODUCT_FAIL });
+          dispatch({ type: productContants.GETPRODUCT_FAIL }); 
         }
-      } catch (error) {
-        console.log(error);
+      } catch (error) { 
+        console.log(error); 
       }
     };
   };
