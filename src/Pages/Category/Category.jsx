@@ -1,17 +1,29 @@
+import CheckboxTree from "react-checkbox-tree";
+import MyModal from "../../Components/UI/MyModal";
 import React, { useEffect, useState } from "react";
 import Layout from "../../Components/Layout/Layout";
 import InputField from "../../Components/UI/InputField";
-import { useDispatch, useSelector } from "react-redux/es/exports";
+import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import { Col, Row, Button, Container } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import { addCategory, getAllCategory } from "../../Actions/categoryAction";
-import MyModal from "../../Components/UI/MyModal";
+import {
+  BiChevronUp,
+  BiChevronDown,
+  BiFolder,
+  BiFolderOpen,
+} from "react-icons/bi";
+import { RiCheckboxBlankFill, RiCheckboxBlankLine } from "react-icons/ri";
 
 function Category() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const [cateName, setCateName] = useState("");
-  const [subCateName, setSubCateName] = useState("");
   const [cateImg, setCateImg] = useState("");
+  const [cateName, setCateName] = useState("");
+  const [checked, setChecked] = useState([]);
+  const [expanded, setExpanded] = useState([]);
+  const [subCateName, setSubCateName] = useState("");
+  const [update, setUpdate] = useState(false);
   const categories = useSelector((state) => state.category.categories);
 
   /* Add Category to Database */
@@ -28,14 +40,12 @@ function Category() {
   const showCategory = (categories) => {
     let myCategory = [];
     for (const category of categories) {
-      myCategory.push(
-        <li key={category.name}>
-          {category.name}
-          {category.children ? (
-            <ul>{showCategory(category.children)}</ul>
-          ) : null}
-        </li>
-      );
+      myCategory.push({
+        label: category.name,
+        value: category._id,
+        children:
+          category.children.length > 0 && showCategory(category.children),
+      });
     }
 
     return myCategory;
@@ -59,6 +69,12 @@ function Category() {
     return options;
   };
 
+  const updateCategory = () => {
+    setUpdate(true);
+    const categoryList = printCateSelect(categories)
+    console.log({ expanded, checked, categoryList });
+  };
+
   useEffect(() => {
     dispatch(getAllCategory());
   }, [dispatch]);
@@ -78,11 +94,38 @@ function Category() {
         </Row>
         <Row>
           <Col md={12}>
-            <ul>{showCategory(categories)}</ul>
+            <CheckboxTree
+              nodes={showCategory(categories)}
+              checked={checked}
+              expanded={expanded}
+              onCheck={(checked) => setChecked(checked)}
+              onExpand={(expanded) => setExpanded(expanded)}
+              icons={{
+                check: <RiCheckboxBlankFill />,
+                uncheck: <RiCheckboxBlankLine />,
+                halfCheck: <RiCheckboxBlankFill />,
+                expandClose: <BiChevronDown />,
+                expandOpen: <BiChevronUp />,
+                parentClose: <BiFolder />,
+                parentOpen: <BiFolderOpen />,
+                leaf: <BiFolder />,
+              }}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="mt-3">
+            <Button variant="danger" className="me-2">
+              Delete
+            </Button>
+            <Button variant="success" onClick={updateCategory}>
+              Edit
+            </Button>
           </Col>
         </Row>
       </Container>
 
+      {/* Category - Add Modal */}
       <MyModal
         show={show}
         setShow={setShow}
@@ -113,26 +156,50 @@ function Category() {
           onChange={(e) => setCateImg(e.target.files[0])}
         />{" "}
       </MyModal>
+
+      {/* Category - Edit Modal */}
+      <MyModal
+        show={update}
+        setShow={setUpdate}
+        title="Update Category"
+        buttonName="Edit"
+        handleSubmit={handleSubmit}
+        size="lg"
+      >
+        <Row className="mb-3">
+          <Col>
+            <h5>Expanded</h5>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <InputField
+              type="text"
+              placeholder="Category Name"
+              value={cateName}
+              noM={true}
+              onChange={(e) => setCateName(e.target.value)}
+            />
+          </Col>
+          <Col>
+            <select className="form-control">
+              <option>Select Category</option>
+              <option>Select Category</option>
+              <option>Select Category</option>
+            </select>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <InputField
+              type="file"
+              onChange={(e) => setCateImg(e.target.files[0])}
+            />
+          </Col>
+        </Row>
+      </MyModal>
     </Layout>
   );
 }
 
 export default Category;
-
-/* 
-<Modal show={show} onHide={() => setShow(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add New Category</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-           
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button variant="primary" onClick={handleSubmit}>
-              Add Category
-            </Button>
-          </Modal.Footer>
-</Modal> 
-    */

@@ -20,11 +20,9 @@ function MyModal({
 
       {buttonName && (
         <Modal.Footer>
-          (
           <Button variant="primary" onClick={handleSubmit}>
             {buttonName}
           </Button>
-          )
         </Modal.Footer>
       )}
     </Modal>
