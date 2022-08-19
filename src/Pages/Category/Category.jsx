@@ -71,8 +71,40 @@ function Category() {
 
   const updateCategory = () => {
     setUpdate(true);
-    const categoryList = printCateSelect(categories)
-    console.log({ expanded, checked, categoryList });
+    const checkedArray = [];
+    const expandArray = [];
+    const plainCategory = printCateSelect(categories);
+
+    checked.length &&
+      checked.forEach((check, i) => {
+        const category = plainCategory.find((cate, _i) => cate.value === check);
+        category && checkedArray.push(category);
+      });
+
+    expanded.length &&
+      expanded.forEach((expand, i) => {
+        const category = plainCategory.find(
+          (cate, _i) => cate.value === expand
+        );
+        category && expandArray.push(category);
+      });
+
+    setChecked(checkedArray);
+    setExpanded(expandArray);
+  };
+
+  const handleInput = (key, value, i, type) => {
+    if (type === "checked") {
+      const updatedArray = checked.map((check, _i) =>
+        i === _i ? { ...check, [key]: value } : check
+      );
+      setChecked(updatedArray);
+    } else if (type === "expanded") {
+      const updatedArray = expanded.map((check, _i) =>
+        i === _i ? { ...check, [key]: value } : check
+      );
+      setExpanded(updatedArray);
+    }
   };
 
   useEffect(() => {
@@ -168,35 +200,93 @@ function Category() {
       >
         <Row className="mb-3">
           <Col>
+            <h5>Checked</h5>
+          </Col>
+        </Row>
+        {checked.map((check, i) => (
+          <Row key={i}>
+            <Col>
+              <InputField
+                type="text"
+                placeholder="Category Name"
+                value={check.name}
+                noM={true}
+                onChange={(e) =>
+                  handleInput("name", e.target.value, i, "checked")
+                }
+              />
+            </Col>
+            <Col>
+              <select
+                className="form-control"
+                value={check.parentId}
+                onChange={(e) =>
+                  handleInput("parentId", e.target.value, i, "checked")
+                }
+              >
+                <option>Select Category</option>
+                {printCateSelect(categories).map((cate) => (
+                  <option key={cate.value} value={cate.value}>
+                    {cate.name}
+                  </option>
+                ))}
+              </select>
+            </Col>
+            <Col>
+              <select className="form-control">
+                <option>Select Type</option>
+                <option>Page</option>
+                <option>Image</option>
+                <option>Product</option>
+              </select>
+            </Col>
+          </Row>
+        ))}
+
+        <Row className="mb-3">
+          <Col>
             <h5>Expanded</h5>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <InputField
-              type="text"
-              placeholder="Category Name"
-              value={cateName}
-              noM={true}
-              onChange={(e) => setCateName(e.target.value)}
-            />
-          </Col>
-          <Col>
-            <select className="form-control">
-              <option>Select Category</option>
-              <option>Select Category</option>
-              <option>Select Category</option>
-            </select>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <InputField
-              type="file"
-              onChange={(e) => setCateImg(e.target.files[0])}
-            />
-          </Col>
-        </Row>
+        {expanded.map((expand, i) => (
+          <Row key={i}>
+            <Col>
+              <InputField
+                type="text"
+                placeholder="Category Name"
+                value={expand.name}
+                noM={true}
+                onChange={(e) =>
+                  handleInput("name", e.target.value, i, "expanded")
+                }
+              />
+            </Col>
+            <Col>
+              <select
+                className="form-control"
+                value={expand.parentId}
+                onChange={(e) =>
+                  handleInput("parentId", e.target.value, i, "expanded")
+                }
+              >
+                <option>Select Category</option>
+                {printCateSelect(categories).map((cate) => (
+                  <option key={cate.value} value={cate.value}>
+                    {cate.name}
+                  </option>
+                ))}
+              </select>
+            </Col>
+            <Col>
+              <select className="form-control">
+                <option>Select Type</option>
+                <option>Page</option>
+                <option>Image</option>
+                <option>Product</option>
+              </select>
+            </Col>
+          </Row>
+        ))}
       </MyModal>
     </Layout>
   );
