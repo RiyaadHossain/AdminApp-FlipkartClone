@@ -42,7 +42,7 @@ const buildNewCategories = (parentId, categories, category) => {
 }
 
 const categoryReducer = (state = initialState, action) => {
-    
+
     switch (action.type) {
         case categoryContants.GETALLCATE_REQUEST:
             state = { ...state, loading: true }
@@ -70,6 +70,14 @@ const categoryReducer = (state = initialState, action) => {
 
         case categoryContants.ADDCATE_FAIL:
             state = { ...state, loading: false, error: action.payload.error }
+            break;
+        
+        case categoryContants.UPDATE_CATE_REQUEST:
+            state = { ...state, loading: true }
+            break;
+        
+        case categoryContants.UPDATE_CATE_SUCCESS:
+            state = { ...state, loading: false }
             break;
 
         default:

@@ -6,7 +6,11 @@ import InputField from "../../Components/UI/InputField";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import { Col, Row, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { addCategory, getAllCategory } from "../../Actions/categoryAction";
+import {
+  addCategory,
+  getAllCategory,
+  updateCategoryModal,
+} from "../../Actions/categoryAction";
 import {
   BiChevronUp,
   BiChevronDown,
@@ -69,6 +73,7 @@ function Category() {
     return options;
   };
 
+  // Update Button Funtion
   const updateCategory = () => {
     setUpdate(true);
     const checkedArray = [];
@@ -93,6 +98,7 @@ function Category() {
     setExpanded(expandArray);
   };
 
+  // Handle Input Componet
   const handleInput = (key, value, i, type) => {
     if (type === "checked") {
       const updatedArray = checked.map((check, _i) =>
@@ -105,6 +111,34 @@ function Category() {
       );
       setExpanded(updatedArray);
     }
+  };
+
+  // Handle Update Category from the Database
+  const hanleUpdate = () => {
+    const form = new FormData();
+
+    checked.forEach((item, i) => {
+      console.log(item.value);
+      form.append("_id", item.value);
+      form.append("name", item.name);
+      form.append("type", item.type);
+      form.append("parentId", item.parentId ? item.parentId : "");
+    });
+
+    expanded.forEach((item, i) => {
+      console.log(item.value);
+      form.append("_id", item.value);
+      form.append("name", item.name);
+      form.append("type", item.type);
+      form.append("parentId", item.parentId ? item.parentId : "");
+    });
+
+    dispatch(updateCategoryModal(form)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+      }
+    });
+    setUpdate(false);
   };
 
   useEffect(() => {
@@ -195,7 +229,7 @@ function Category() {
         setShow={setUpdate}
         title="Update Category"
         buttonName="Edit"
-        handleSubmit={handleSubmit}
+        handleSubmit={hanleUpdate}
         size="lg"
       >
         <Row className="mb-3">
@@ -235,9 +269,9 @@ function Category() {
             <Col>
               <select className="form-control">
                 <option>Select Type</option>
-                <option>Page</option>
-                <option>Image</option>
-                <option>Product</option>
+                <option value="page">Page</option>
+                <option value="image">Image</option>
+                <option value="product">Product</option>
               </select>
             </Col>
           </Row>
@@ -246,9 +280,7 @@ function Category() {
         <Row className="mb-3">
           {
             <Col>
-              <h5>
-                {checked.length ? "Checked" : ""}
-              </h5>
+              <h5>{checked.length ? "Checked" : ""}</h5>
             </Col>
           }
         </Row>
@@ -284,9 +316,9 @@ function Category() {
             <Col>
               <select className="form-control">
                 <option>Select Type</option>
-                <option>Page</option>
-                <option>Image</option>
-                <option>Product</option>
+                <option value="page">Page</option>
+                <option value="image">Image</option>
+                <option value="product">Product</option>
               </select>
             </Col>
           </Row>
