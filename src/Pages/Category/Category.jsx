@@ -200,28 +200,28 @@ function Category() {
       >
         <Row className="mb-3">
           <Col>
-            <h5>Checked</h5>
+            <h5>{expanded.length ? "Expanded" : ""}</h5>
           </Col>
         </Row>
-        {checked.map((check, i) => (
+        {expanded.map((expand, i) => (
           <Row key={i}>
             <Col>
               <InputField
                 type="text"
                 placeholder="Category Name"
-                value={check.name}
+                value={expand.name}
                 noM={true}
                 onChange={(e) =>
-                  handleInput("name", e.target.value, i, "checked")
+                  handleInput("name", e.target.value, i, "expanded")
                 }
               />
             </Col>
             <Col>
               <select
                 className="form-control"
-                value={check.parentId}
+                value={expand.parentId}
                 onChange={(e) =>
-                  handleInput("parentId", e.target.value, i, "checked")
+                  handleInput("parentId", e.target.value, i, "expanded")
                 }
               >
                 <option>Select Category</option>
@@ -244,29 +244,33 @@ function Category() {
         ))}
 
         <Row className="mb-3">
-          <Col>
-            <h5>Expanded</h5>
-          </Col>
+          {
+            <Col>
+              <h5>
+                {checked.length ? "Checked" : ""}
+              </h5>
+            </Col>
+          }
         </Row>
-        {expanded.map((expand, i) => (
+        {checked.map((check, i) => (
           <Row key={i}>
             <Col>
               <InputField
                 type="text"
                 placeholder="Category Name"
-                value={expand.name}
+                value={check.name}
                 noM={true}
                 onChange={(e) =>
-                  handleInput("name", e.target.value, i, "expanded")
+                  handleInput("name", e.target.value, i, "checked")
                 }
               />
             </Col>
             <Col>
               <select
                 className="form-control"
-                value={expand.parentId}
+                value={check.parentId}
                 onChange={(e) =>
-                  handleInput("parentId", e.target.value, i, "expanded")
+                  handleInput("parentId", e.target.value, i, "checked")
                 }
               >
                 <option>Select Category</option>
