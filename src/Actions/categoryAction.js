@@ -38,7 +38,7 @@ export const updateCategoryModal = (formData) => {
     return async dispatch => {
 
         const res = await axiosAPI.patch("category/updateCategory", formData)
-        
+
         if (res.status === 200) {
             return true
         } else {
@@ -46,5 +46,19 @@ export const updateCategoryModal = (formData) => {
 
         }
 
+    }
+}
+
+
+export const deleteCateModal = (ids) => {
+    return async dispatch => {
+        
+        const res = await axiosAPI.post("category/deleteCategory", {ids})
+
+        if (res.status === 200) {
+            return true
+        } else {
+            console.log(res)
+        }
     }
 }

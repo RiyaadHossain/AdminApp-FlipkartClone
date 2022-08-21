@@ -8,6 +8,7 @@ import { Col, Row, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import {
   addCategory,
+  deleteCateModal,
   getAllCategory,
   updateCategoryModal,
 } from "../../Actions/categoryAction";
@@ -74,9 +75,8 @@ function Category() {
     return options;
   };
 
-  // Update Button Funtion
-  const updateCategory = () => {
-    setUpdate(true);
+  // Set Checked and Expanded items in the state
+  const selectedItems = () => {
     const checkedArray = [];
     const expandArray = [];
     const plainCategory = printCateSelect(categories);
@@ -97,6 +97,12 @@ function Category() {
 
     setChecked(checkedArray);
     setExpanded(expandArray);
+  };
+
+  // Update Button Funtion
+  const updateCategory = () => {
+    setUpdate(true);
+    selectedItems();
   };
 
   // Handle Input Componet
@@ -141,7 +147,20 @@ function Category() {
   };
 
   // Handle Delete Category from Database
-  const hanleDelete = () => {};
+  const hanleDelete = () => {
+    selectedItems();
+    const checkedIds = checked.map((item) => ({ _id: item }));
+    const expandedIds = expanded.map((item) => ({ _id: item }));
+    const ids = checkedIds.concat(expandedIds);
+    setDeleteCate(false);
+
+    dispatch(deleteCateModal(ids)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+      }
+    });
+
+  };
 
   useEffect(() => {
     dispatch(getAllCategory());
@@ -183,7 +202,11 @@ function Category() {
         </Row>
         <Row>
           <Col className="mt-3">
-            <Button variant="danger" className="me-2" onClick={() => setDeleteCate(true)}>
+            <Button
+              variant="danger"
+              className="me-2"
+              onClick={() => setDeleteCate(true)}
+            >
               Delete
             </Button>
             <Button variant="success" onClick={updateCategory}>
@@ -334,22 +357,19 @@ function Category() {
         show={deleteCate}
         setShow={setDeleteCate}
         title="Delete Category"
-        handleSubmit={hanleDelete}
         buttonName={true}
         buttons={[
           {
             label: "No",
             color: "primary",
             onclick: () => {
-              alert("No");
+              setDeleteCate(false);
             },
           },
           {
             label: "Yes",
             color: "danger",
-            onclick: () => {
-              alert("Yes");
-            },
+            onclick: hanleDelete,
           },
         ]}
       >
