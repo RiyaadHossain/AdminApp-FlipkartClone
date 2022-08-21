@@ -17,19 +17,17 @@ const buildNewCategories = (parentId, categories, category) => {
     for (let cat of categories) {
 
         if (cat._id === parentId) {
-            /* const newCategory = {
+            const newCategory = {
                 _id: category._id,
                 name: category.name,
                 slug: category.slug,
                 parentId: category.parentId,
                 children: []
-            }; */
+            };
             myCategories.push({
                 ...cat,
                 children: cat.children.length ?
-                    buildNewCategories(parentId, [...cat.children,
-                    { _id: category._id, name: category.name, slug: category.slug, parentId: category.parentId, children: category.children }], category)
-                    : []
+                    [...cat.children, newCategory] : [newCategory]
             })
         } else {
             myCategories.push({
@@ -62,7 +60,6 @@ const categoryReducer = (state = initialState, action) => {
 
         case categoryContants.ADDCATE_SUCCESS:
             const category = action.payload.category;
-            console.log(category)
             const updatedCategories = buildNewCategories(category.parentId, state.categories, category);
 
             state = { ...state, loading: false, categories: updatedCategories }
@@ -71,11 +68,11 @@ const categoryReducer = (state = initialState, action) => {
         case categoryContants.ADDCATE_FAIL:
             state = { ...state, loading: false, error: action.payload.error }
             break;
-        
+
         case categoryContants.UPDATE_CATE_REQUEST:
             state = { ...state, loading: true }
             break;
-        
+
         case categoryContants.UPDATE_CATE_SUCCESS:
             state = { ...state, loading: false }
             break;
