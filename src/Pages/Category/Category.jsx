@@ -22,12 +22,13 @@ import { RiCheckboxBlankFill, RiCheckboxBlankLine } from "react-icons/ri";
 function Category() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [deleteCate, setDeleteCate] = useState(false);
   const [cateImg, setCateImg] = useState("");
-  const [cateName, setCateName] = useState("");
   const [checked, setChecked] = useState([]);
-  const [expanded, setExpanded] = useState([]);
-  const [subCateName, setSubCateName] = useState("");
   const [update, setUpdate] = useState(false);
+  const [expanded, setExpanded] = useState([]);
+  const [cateName, setCateName] = useState("");
+  const [subCateName, setSubCateName] = useState("");
   const categories = useSelector((state) => state.category.categories);
 
   /* Add Category to Database */
@@ -113,12 +114,11 @@ function Category() {
     }
   };
 
-  // Handle Update Category from the Database
+  // Handle Update Category from Database
   const hanleUpdate = () => {
     const form = new FormData();
 
     checked.forEach((item, i) => {
-      console.log(item.value);
       form.append("_id", item.value);
       form.append("name", item.name);
       form.append("type", item.type);
@@ -126,7 +126,6 @@ function Category() {
     });
 
     expanded.forEach((item, i) => {
-      console.log(item.value);
       form.append("_id", item.value);
       form.append("name", item.name);
       form.append("type", item.type);
@@ -140,6 +139,9 @@ function Category() {
     });
     setUpdate(false);
   };
+
+  // Handle Delete Category from Database
+  const hanleDelete = () => {};
 
   useEffect(() => {
     dispatch(getAllCategory());
@@ -181,7 +183,7 @@ function Category() {
         </Row>
         <Row>
           <Col className="mt-3">
-            <Button variant="danger" className="me-2">
+            <Button variant="danger" className="me-2" onClick={() => setDeleteCate(true)}>
               Delete
             </Button>
             <Button variant="success" onClick={updateCategory}>
@@ -191,7 +193,7 @@ function Category() {
         </Row>
       </Container>
 
-      {/* Category - Add Modal */}
+      {/* Category - Add Modal Start */}
       <MyModal
         show={show}
         setShow={setShow}
@@ -222,8 +224,9 @@ function Category() {
           onChange={(e) => setCateImg(e.target.files[0])}
         />{" "}
       </MyModal>
+      {/* Category - Add Modal End */}
 
-      {/* Category - Edit Modal */}
+      {/* Category - Edit Modal Start */}
       <MyModal
         show={update}
         setShow={setUpdate}
@@ -324,6 +327,35 @@ function Category() {
           </Row>
         ))}
       </MyModal>
+      {/* Category - Edit Modal End */}
+
+      {/* Category - Delete Modal Start */}
+      <MyModal
+        show={deleteCate}
+        setShow={setDeleteCate}
+        title="Delete Category"
+        handleSubmit={hanleDelete}
+        buttonName={true}
+        buttons={[
+          {
+            label: "No",
+            color: "primary",
+            onclick: () => {
+              alert("No");
+            },
+          },
+          {
+            label: "Yes",
+            color: "danger",
+            onclick: () => {
+              alert("Yes");
+            },
+          },
+        ]}
+      >
+        Are You Sure?
+      </MyModal>
+      {/* Category - Delete Modal End */}
     </Layout>
   );
 }

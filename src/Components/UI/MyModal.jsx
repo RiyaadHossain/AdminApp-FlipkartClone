@@ -9,6 +9,7 @@ function MyModal({
   title,
   buttonName,
   size,
+  buttons,
 }) {
   return (
     <Modal show={show} onHide={() => setShow(false)} size={size}>
@@ -20,9 +21,17 @@ function MyModal({
 
       {buttonName && (
         <Modal.Footer>
-          <Button variant="primary" onClick={handleSubmit}>
-            {buttonName}
-          </Button>
+          {buttons ? (
+            buttons.map(({ label, color, onclick }, i) => (
+              <Button key={i} variant={color} onClick={() => onclick()}>
+                {label}
+              </Button>
+            ))
+          ) : (
+            <Button variant="primary" onClick={handleSubmit}>
+              {buttonName}
+            </Button>
+          )}
         </Modal.Footer>
       )}
     </Modal>
