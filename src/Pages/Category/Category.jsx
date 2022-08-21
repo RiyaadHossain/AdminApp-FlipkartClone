@@ -154,12 +154,13 @@ function Category() {
     const ids = checkedIds.concat(expandedIds);
     setDeleteCate(false);
 
-    dispatch(deleteCateModal(ids)).then((result) => {
-      if (result) {
-        dispatch(getAllCategory());
-      }
-    });
-
+    if (checkedIds.length > 0) {
+      dispatch(deleteCateModal(ids)).then((result) => {
+        if (result) {
+          dispatch(getAllCategory());
+        }
+      });
+    }
   };
 
   useEffect(() => {

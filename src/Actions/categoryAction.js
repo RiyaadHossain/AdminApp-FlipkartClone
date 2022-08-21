@@ -37,12 +37,14 @@ export const addCategory = (formData) => {
 export const updateCategoryModal = (formData) => {
     return async dispatch => {
 
+        dispatch({ type: categoryContants.UPDATE_CATE_REQUEST })
         const res = await axiosAPI.patch("category/updateCategory", formData)
-
         if (res.status === 200) {
+            dispatch({ type: categoryContants.UPDATE_CATE_SUCCESS })
             return true
         } else {
-            console.log(res);
+            const { error } = res
+            dispatch({ type: categoryContants.UPDATE_CATE_FAIL, payload: error })
 
         }
 
@@ -52,8 +54,8 @@ export const updateCategoryModal = (formData) => {
 
 export const deleteCateModal = (ids) => {
     return async dispatch => {
-        
-        const res = await axiosAPI.post("category/deleteCategory", {ids})
+
+        const res = await axiosAPI.post("category/deleteCategory", { ids })
 
         if (res.status === 200) {
             return true

@@ -77,6 +77,10 @@ const categoryReducer = (state = initialState, action) => {
             state = { ...state, loading: false }
             break;
 
+        case categoryContants.UPDATE_CATE_FAIL:
+            state = { ...state, error: action.payload.error }
+            break;
+
         default:
             break;
     }
