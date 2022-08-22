@@ -54,13 +54,14 @@ export const updateCategoryModal = (formData) => {
 
 export const deleteCateModal = (ids) => {
     return async dispatch => {
-
+        dispatch({ type: categoryContants.DELETE_CATE_REQUEST })
         const res = await axiosAPI.post("category/deleteCategory", { ids })
 
         if (res.status === 200) {
+            dispatch({ type: categoryContants.DELETE_CATE_SUCCESS })
             return true
         } else {
-            console.log(res)
+            dispatch({ type: categoryContants.DELETE_CATE_FAIL })
         }
     }
 }
